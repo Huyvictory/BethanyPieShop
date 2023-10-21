@@ -1,11 +1,17 @@
-using BethanyPieShop.Mock;
+using BethanyPieShop.Models;
 using BethanyPieShop.Repository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Register services through DI container to be used through one lifecycle scope
-builder.Services.AddScoped<ICategoryRepository, MockCategoryRepository>();
-builder.Services.AddScoped<IPieRepository, MockPieRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IPieRepository, PieRepository>();
+
+builder.Services.AddDbContext<BethanyPieShopDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:BethanysPieShopDbContextConnection"]);
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -20,4 +26,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapDefaultControllerRoute();
 
+//Seed data for database if there is no data yet
+DbInitializer.Seed(app);
 app.Run();
