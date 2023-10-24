@@ -20,6 +20,7 @@ builder.Services.AddDbContext<BethanyPieShopDbContext>(options =>
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -34,6 +35,8 @@ if (app.Environment.IsDevelopment())
 app.MapDefaultControllerRoute();
 
 //app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 //Seed data for database if there is no data yet
 DbInitializer.Seed(app);
