@@ -30,5 +30,11 @@ namespace BethanyPieShop.Mock
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Pie> SearchPiesByName(string searchQuery)
+        {
+            return AllPies.Where(p => p.Name.Contains(searchQuery));
+
+        }
     }
 }

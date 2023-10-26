@@ -2,6 +2,7 @@ using BethanyPieShop.Interfaces;
 using BethanyPieShop.Models;
 using BethanyPieShop.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,15 @@ builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCa
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
+
 builder.Services.AddDbContext<BethanyPieShopDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["ConnectionStrings:BethanysPieShopDbContextConnection"]);
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
 builder.Services.AddControllersWithViews();
@@ -37,6 +44,8 @@ app.MapDefaultControllerRoute();
 //app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 //Seed data for database if there is no data yet
 DbInitializer.Seed(app);

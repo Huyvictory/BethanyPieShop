@@ -6,7 +6,7 @@ namespace BethanyPieShop.Repository
     {
         IEnumerable<Pie> AllPies { get; }
         IEnumerable<Pie> PiesOfTheWeek { get; }
-
         Pie? GetPieById(int pieId);
+        IEnumerable<Pie> SearchPiesByName(string pieName);
     }
 }
