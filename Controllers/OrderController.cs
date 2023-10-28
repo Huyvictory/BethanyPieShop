@@ -1,10 +1,12 @@
 ﻿using BethanyPieShop.Interfaces;
 using BethanyPieShop.Models;
 using BethanyPieShop.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BethanyPieShop.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderRepository _orderRepository;
